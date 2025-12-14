@@ -387,30 +387,29 @@ body {
     max-width: 200px;
   }
 
-  /* 2. Scrollable Field Buttons (Carousel) */
+  /* 2. Field Buttons: WRAP instead of scroll */
   .mid-toolbar {
     width: 100%;
-    order: 2; /* Keep below upload, above actions? Or rearrange as needed */
-    align-items: flex-start;
+    order: 2;
+    align-items: stretch; /* Full width children */
   }
 
   .field-buttons {
     width: 100%;
+    display: flex; /* or grid */
+    flex-wrap: wrap; /* Allow wrapping to next line */
+    gap: 8px; /* Space between buttons */
     justify-content: flex-start;
-    overflow-x: auto; /* Enable horizontal scroll */
-    padding-bottom: 8px; /* Space for scrollbar if visible */
-    -webkit-overflow-scrolling: touch; /* Smooth scroll iOS */
-    scrollbar-width: none; /* Hide scrollbar Firefox */
-  }
-  
-  .field-buttons::-webkit-scrollbar {
-    display: none; /* Hide scrollbar Chrome/Safari */
+    padding-bottom: 0;
+    overflow: visible; /* Show everything */
   }
 
   .field-btn {
-    white-space: nowrap; /* Prevent text wrapping inside button */
-    flex-shrink: 0; /* Prevent button shrinking */
-    padding: 8px 12px;
+    white-space: normal; /* Allow text to wrap if really needed */
+    flex: 1 0 30%; /* Grow to fill space, basis 30% (3 per row roughly) */
+    justify-content: center;
+    padding: 8px 4px;
+    font-size: 12px; /* Slightly smaller text for fit */
   }
 
   /* 3. Stack Action Buttons nicely */
