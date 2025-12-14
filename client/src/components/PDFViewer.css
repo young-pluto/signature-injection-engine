@@ -85,6 +85,17 @@
   animation: spin 1s linear infinite;
 }
 
+@media (max-width: 768px) {
+  .pdf-canvas-wrapper {
+    padding: 10px; /* Reduce padding significantly on mobile */
+    min-height: 400px; /* Reduce min-height */
+  }
+  
+  .pdf-document-container {
+    width: 100%; /* Ensure it fits */
+  }
+}
+
 .pdf-info {
   margin-top: 20px;
   text-align: center;
@@ -93,6 +104,7 @@
   font-weight: 500;
   letter-spacing: 0.5px;
   text-transform: uppercase;
+  white-space: nowrap;
 }
 
 @keyframes spin {
