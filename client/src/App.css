@@ -350,22 +350,82 @@ body {
 
 /* Responsive */
 @media (max-width: 768px) {
+  .App {
+    padding: 20px 10px;
+  }
+
+  .app-header {
+    margin-bottom: 24px;
+  }
+
+  .app-header h1 {
+    font-size: 32px;
+  }
+
+  .app-container {
+    padding: 16px;
+    border-radius: var(--radius-md);
+  }
+
   .toolbar {
     grid-template-columns: 1fr;
-    gap: 20px;
+    gap: 16px;
+    padding: 12px;
+  }
+
+  /* 1. Stack Upload Section */
+  .upload-section {
+    width: 100%;
+    justify-content: space-between;
   }
   
+  .file-name {
+    max-width: 200px;
+  }
+
+  /* 2. Scrollable Field Buttons (Carousel) */
   .mid-toolbar {
-    order: 3;
     width: 100%;
+    order: 2; /* Keep below upload, above actions? Or rearrange as needed */
+    align-items: flex-start;
   }
 
   .field-buttons {
     width: 100%;
-    justify-content: center;
+    justify-content: flex-start;
+    overflow-x: auto; /* Enable horizontal scroll */
+    padding-bottom: 8px; /* Space for scrollbar if visible */
+    -webkit-overflow-scrolling: touch; /* Smooth scroll iOS */
+    scrollbar-width: none; /* Hide scrollbar Firefox */
   }
   
+  .field-buttons::-webkit-scrollbar {
+    display: none; /* Hide scrollbar Chrome/Safari */
+  }
+
+  .field-btn {
+    white-space: nowrap; /* Prevent text wrapping inside button */
+    flex-shrink: 0; /* Prevent button shrinking */
+    padding: 8px 12px;
+  }
+
+  /* 3. Stack Action Buttons nicely */
   .action-buttons {
     width: 100%;
+    order: 3; /* Actions at bottom of toolbar */
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .sign-btn, .download-btn {
+    width: 100%;
+    justify-content: center;
+    padding: 12px; /* Touch friendly target */
+  }
+  
+  .pdf-viewer-container {
+    /* Ensure PDF viewer doesn't overflow */
+    max-width: 100%;
+    overflow-x: hidden;
   }
 }
