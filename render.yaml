@@ -1,0 +1,12 @@
+services:
+  - type: web
+    name: signature-engine-backend
+    env: node
+    root: server
+    buildCommand: npm install
+    startCommand: npm run dev
+    envVars:
+      - key: PORT
+        value: 10000
+      - key: NODE_VERSION
+        value: 18.x
