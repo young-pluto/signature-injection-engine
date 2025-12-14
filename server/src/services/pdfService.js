@@ -240,6 +240,9 @@ async function savePDF(pdfBuffer, filename) {
   const uploadsDir = path.join(__dirname, "../../uploads");
   const filePath = path.join(uploadsDir, filename);
 
+  // Ensure directory exists
+  await fs.mkdir(uploadsDir, { recursive: true });
+
   await fs.writeFile(filePath, pdfBuffer);
   return filePath;
 }
