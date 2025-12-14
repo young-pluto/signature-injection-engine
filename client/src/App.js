@@ -17,6 +17,20 @@ function App() {
   const [numPages, setNumPages] = useState(null);
   const [viewportDims, setViewportDims] = useState({ width: 800, height: 600 });
 
+  // WAKE UP CALL: Ping backend immediately to start cold-start process
+  React.useEffect(() => {
+    const wakeUpBackend = async () => {
+      try {
+        console.log("Pinging backend to wake up...");
+        await axios.get(`${API_URL}/health`);
+        console.log("Backend is awake!");
+      } catch (error) {
+        console.warn("Backend wake-up failed (might be sleeping):", error);
+      }
+    };
+    wakeUpBackend();
+  }, []);
+
   const handleFileUpload = (e) => {
     const file = e.target.files[0];
     if (file && file.type === "application/pdf") {
