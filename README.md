@@ -7,10 +7,12 @@ A full-stack application for adding and "burning" signatures into PDF documents 
 - **PDF Upload & Viewing**: Upload and view PDF documents in the browser
 - **Draggable Fields**: Add signature, text, and date fields with drag & drop
 - **Signature Capture**: Draw signatures with canvas or upload image files
-- **Coordinate Transformation**: Accurate CSS pixel → PDF point conversion
+- **Responsive Mobile UI**: Touch-friendly interface with grid layout for smaller screens
+- **Rich Field Types**: Signature, Text, Date, Image (Upload), Checkbox, and Radio buttons
+- **Smart Wake-Up**: Auto-pings backend on load to minimize cold-start latency (Render Free Tier)
+- **Coordinate Transformation**: Percentage-based system for device-agnostic positioning
 - **Aspect Ratio Handling**: Signatures are centered and scaled properly
 - **Audit Trail**: SHA-256 hash tracking for document integrity
-- **Responsive Design**: Premium UI with gradients and smooth animations
 
 ## 🏗️ Architecture
 
@@ -95,25 +97,23 @@ The app will open at `http://localhost:3000`
 
 ## 🎯 How It Works
 
-### The Coordinate Transformation Problem
+### The Coordinate Transformation Innovation
 
-**Challenge**: Browsers use CSS pixels (top-left origin), PDFs use points at 72 DPI (bottom-left origin).
+**Challenge**: Browsers use CSS pixels (top-left origin) which change absolute values on resize. PDFs use fixed points (72 DPI, bottom-left origin).
 
-**Solution**: Mathematical transformation with responsive anchoring
+**Solution**: **Percentage-Based Coordinate System (0-100%)**
+Instead of tracking pixels, we track the _relative percentage_ position of fields. This ensures the UI is **fully responsive** across Desktop and Mobile.
 
 ```javascript
-// Step 1: Calculate scale factors
-const scaleX = pdfWidth / viewportWidth;
-const scaleY = pdfHeight / viewportHeight;
+// Step 1: Frontend sends Percentages (0-100)
+const field = { x: 50, y: 50, width: 25, height: 10 }; // Center of page
 
-// Step 2: Transform coordinates (flip Y-axis)
-const pdfX = cssX * scaleX;
-const pdfY = pdfHeight - (cssY + cssHeight) * scaleY;
-
-// Step 3: Transform dimensions
-const pdfWidthScaled = cssWidth * scaleX;
-const pdfHeightScaled = cssHeight * scaleY;
+// Step 2: Backend transforms to PDF Points
+const pdfX = (field.x / 100) * pdfWidth;
+const pdfY = pdfHeight - (field.y / 100) * pdfHeight - heightPoints;
 ```
+
+This allows users to design on a phone and sign on a desktop seamlessly.
 
 ### Aspect Ratio Handling
 
@@ -222,7 +222,7 @@ cd server
 - **SHA-256 Hashing**: Original and signed PDFs are hashed
 - **Audit Trail**: All signatures stored in MongoDB with timestamps
 - **File Validation**: Only PDF files accepted
-- **Size Limits**: 10MB max file size
+- **Size Limits**: 50MB max file size (optimized for high-res mobile uploads)
 
 ## 📝 License
 
